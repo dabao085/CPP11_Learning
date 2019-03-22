@@ -39,7 +39,6 @@ public:
     {
         cout << "x: " << x << "y: " << y << endl;
     }
-private:
     int x, y;
 };
 
@@ -75,8 +74,21 @@ int main()
     for_each(pvec.begin(), pvec.end(), bind(&point::print, _1));
 
     //bind member variable
+    vector<int> ivec(10);
+    transform(pvec.begin(), pvec.end(), ivec.begin(), bind(&point::x, _1));
+    for(const auto &a : ivec)
+        cout << a << " ";
+    cout << endl;
 
-
-
+    //bind functor
+    cout << "input x: " << endl;
+    cin >> x;
+    cout << bind(greater<int>(), _1, 10)(x) << endl;   //check x > 10?
+    cout << "input x, y: " << endl;
+    cin >> x >> y;
+    cout << bind(plus<int>(), _1, _2)(x, y) << endl;    //calculate x + y
+    cout << "input x: " << endl;
+    cin >> x;
+    cout << bind(modulus<int>(), _1, 3)(x) << endl;
     return 0;
 }
